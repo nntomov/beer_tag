@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css}"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"/>
+    <script th:src="@{http://code.jquery.com/jquery-3.3.1.min.js}"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js}"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.8.1/css/all.css}"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link th:href="@{https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet">
+    <script th:src="@{/scripts/script.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/stars.css}"/>
+</head>
+<body class="inner-page">
+<div class="top-inner-page">
+    <div class="container">
+        <div class="page-header">
+            <div class="row">
+                <div class="pull-left">
+                    <h1><a th:href="@{/home/all_beers}" style="color: inherit; text-decoration: none">BeerTag</a></h1>
+                </div>
+                <div style="padding-top: 20px" class="pull-right">
+                    <a th:href="@{/logout}" class="btn btn-warning" id="btnSignIn">LogOut</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- NAV -->
+<nav class="navbar navbar-default">
+    <div class="container-fluid container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/home/all_beers}" th:method="GET">Home</a></li>
+                <li><a th:href="@{/home/newBeer}" th:method="GET">New Beer</a></li>
+                <li><a th:href="@{/home/all_users}" th:method="GET">Users</a></li>
+                <li><a th:href="@{/home/my_account}" th:method="GET">My Account</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<!-- NAV END -->
+<div class="container beer-info">
+    <!-- BEER INFO -->
+    <div class="row">
+        <div class="col-md-5 col-xs-12">
+            <img th:src="@{'data:image/png;base64,'+${beerPicture}}" class="img-responsive">
+            <div class="btn-group col-xs-7" role="group">
+                <a id="wish-button" th:data-beer-id="${beerId}" th:data-user-id="${userId}" th:data-type="'Wished'" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Add to wishlist"><i class="far fa-heart"></i></a>
+                <a id="drank-button" th:data-beer-id="${beerId}" th:data-user-id="${userId}" th:data-type="'Drank'" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Mark as drank"><i class="fas fa-beer"></i></a>
+                <a href="" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Add tag" id="add-tag"><i class="fas fa-tags"></i></a>
+            </div>
+            <!-- RATING -->
+            <form method="post" th:action="@{'/home/vote?beerID='+ ${beerId}}">
+                <div class="rating">
+                    <input type="radio" name="star" id="star5" value="5"
+                           th:attrappend="checked=${userRating == 5}?true">
+                    <label for="star5"></label>
+                    <input type="radio" name="star" id="star4" value="4"
+                           th:attrappend="checked=${userRating == 4}?true">
+                    <label for="star4"></label>
+                    <input type="radio" name="star" id="star3" value="3"
+                           th:attrappend="checked=${userRating == 3}?true">
+                    <label for="star3"></label>
+                    <input type="radio" name="star" id="star2" value="2"
+                           th:attrappend="checked=${userRating == 2}?true">
+                    <label for="star2"></label>
+                    <input type="radio" name="star" id="star1" value="1"
+                           th:attrappend="checked=${userRating == 1}?true">
+                    <label for="star1"></label>
+                </div>
+                <input style="margin-left: 35px" type="submit" class="tags btn btn-primary" value="Vote"/>
+            </form>
+            <!-- RATING END -->
+        </div>
+        <div class="col-md-7 col-xs-12">
+            <h2>Beer Name: <span th:text="|${beerName}|"></span></h2>
+            <h3>Brewery Producer: <span th:text="|${beerProducer}|"></span></h3>
+            <h3>Country of Origin: <span th:text="|${beerCountry}|"></span></h3>
+            <h3>Beer Style: <span th:text="|${beerStyle}|"></span></h3>
+            <h3>Alcohol Volume: <span th:text="|${beerABV}|"></span></h3>
+            <h3>Average Rating: <span th:text="|${avgRating}|"></span></h3>
+            <h3>Added By User: <a th:href="@{/home/user_acount(id=${userID})}"><span th:text="|${creatorName}|"></span></a></h3>
+            <br/>
+            <p>Description: <span th:text="|${beerDesc}|"></span></p>
+            <div class="btn-group" role="group" th:each="tag : ${beerTags}">
+                <a href="" class="btn btn-default" th:field="${tag.name}"></a>
+            </div>
+        </div>
+    </div>
+    <!-- BEER INFO END -->
+</div>
+<!-- ADD TAG FORM -->
+<div class="forms">
+    <div class="col-xs-4 col-xs-offset-4 form-container">
+        <div class="col-xs-1 col-xs-offset-11 close-form"><a href="#">X</a></div>
+        <div class="col-xs-12">
+            <form method="post" action="" id="addTagForm">
+                <div class="panel-heading">
+                    <h4>Add Tag</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="tag here..." name="tag">
+                    </div>
+                    <input type="submit" class="btn btn-warning" name="submit" value="Save">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- ADD TAG FORM END -->
+<div class="footer">
+    <div class="text-center">
+        &copy; NTomov&amp;AStoyanov
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="cheers-modal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body" style="text-align: center">
+                <img src="https://i.gifer.com/XCtt.gif" alt="cheers">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+</body>

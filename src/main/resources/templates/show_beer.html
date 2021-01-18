@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css}"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"/>
+    <script th:src="@{http://code.jquery.com/jquery-3.3.1.min.js}"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js}"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.8.1/css/all.css}"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <script th:src="@{/scripts/script.js}"></script>
+</head>
+<body class="inner-page">
+<div class="top-inner-page">
+    <div class="container">
+        <div class="page-header">
+            <div class="row">
+                <div class="pull-left">
+                    <h1><a th:href="@{/}" style="color: inherit; text-decoration: none">BeerTag</a></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- NAV -->
+<nav class="navbar navbar-default">
+    <div class="container-fluid container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<!-- NAV END -->
+<div class="container beer-info">
+    <!-- BEER INFO -->
+    <div class="row">
+        <div class="col-md-5 col-xs-12">
+            <img th:src="@{'data:image/png;base64,'+${beerPicture}}" class="img-responsive">
+        </div>
+        <div class="col-md-7 col-xs-12">
+            <h2>Beer Name: <span th:text="|${beerName}|"></span></h2>
+            <h3>Brewery Producer: <span th:text="|${beerProducer}|"></span></h3>
+            <h3>Country of Origin: <span th:text="|${beerCountry}|"></span></h3>
+            <h3>Beer Style: <span th:text="|${beerStyle}|"></span></h3>
+            <h3>Alcohol Volume: <span th:text="|${beerABV}|"></span></h3>
+            <h3>Average Rating: <span th:text="|${avgRating}|"></span></h3>
+            <br/>
+            <p>Description: <span th:text="|${beerDesc}|"></span></p>
+            <div class="btn-group" role="group" th:each="tag : ${beerTags}">
+                <a href="" class="btn btn-default" th:field="${tag.name}"></a>
+            </div>
+        </div>
+    </div>
+    <!-- BEER INFO END -->
+</div>
+<div class="footer">
+    <div class="text-center">
+        &copy; NTomov&amp;AStoyanov
+    </div>
+</div>
+<script type="text/javascript" src="/scripts/script.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+</body>

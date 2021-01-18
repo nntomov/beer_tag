@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css}"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"/>
+    <script th:src="@{http://code.jquery.com/jquery-3.3.1.min.js}"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js}"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.8.1/css/all.css}"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <script th:src="@{/scripts/script.js}"></script>
+
+</head>
+<body class="inner-page">
+<div class="top-inner-page">
+    <div class="container">
+        <div class="page-header">
+            <div class="row">
+                <div class="pull-left">
+                    <h1><a th:href="@{/home/all_beers}" style="color: inherit; text-decoration: none">BeerTag</a></h1>
+                </div>
+                <div style="padding-top: 20px" class="pull-right">
+                    <a th:href="@{/logout}" class="btn btn-warning" id="btnSignIn">LogOut</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- NAV -->
+<nav class="navbar navbar-default">
+    <div class="container-fluid container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/home/all_beers}" th:method="GET">Home</a></li>
+                <li><a th:href="@{/home/newBeer}" th:method="GET">New Beer</a></li>
+                <li><a th:href="@{/home/all_users}" th:method="GET">Users</a></li>
+                <li class="active"><a th:href="@{/home/my_account}" th:method="GET">My Account<span
+                        class="sr-only">(current)</span></a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<!-- NAV END -->
+<div class="container">
+    <!-- USER INFO -->
+    <div class="row beer-info">
+        <div class="col-md-5 col-xs-12">
+            <div class="col-xs-12 user-info">
+                <img name="picture"
+                     th:src="@{'data:image/png;base64,'+${user.picture}}"
+                     class="img-responsive"/>
+                <div class="pull-left">
+                    <h2>Username: <span th:text="|${user.name}|"></span></h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-md-offset-1 col-xs-12 user-beers">
+            <div class="row">
+                <h3><i class="far fa-star"></i> Top 3 beers</h3>
+                <h2 th:if="${topBeers.isEmpty()}">No Beers Rated</h2>
+
+                <div th:each="beer : ${topBeers}" class="col-md-4 col-xs-12">
+                    <a th:href="@{/beer/of-user-info(id=${beer.id})}"><img name="picture"
+                                                                   th:src="@{'data:image/png;base64,'+${beer.picture}}"
+                                                                   class="img-responsive"/></a>
+                </div>
+            </div>
+            <div class="row">
+                <h3><i class="far fa-heart"></i> Wished Beers</h3>
+                <h2 th:if="${firstWished.picture==null}">No Wished Beers</h2>
+                <div th:unless="${firstWished.picture==null}" id="myCarouselWrapper" class="container-fluid">
+                    <div id="myCarousel-user" class="carousel slide">
+                        <div class="carousel-inner" role="listbox">
+                            <div th:unless="${firstWished.picture==null}" class="item active">
+                                <div th:object="${firstWished}" class="item-item col-sm-4">
+                                    <a th:href="@{/beer/of-user-info(id=${firstWished.id})}"><img name="picture"
+                                                                                                  th:src="@{'data:image/png;base64,'+${firstWished.picture}}"
+                                                                                                  class="img-responsive"/></a>
+                                </div>
+                                <div th:unless="${wishedBeers.isEmpty()}" class="item">
+                                    <div th:each="beer : ${wishedBeers}" class="item-item col-sm-4">
+                                        <a th:href="@{/beer/of-user-info(id=${beer.id})}"><img name="picture"
+                                                                                               th:src="@{'data:image/png;base64,'+${beer.picture}}"
+                                                                                               class="img-responsive"/></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <h3><i class="fas fa-beer"></i> Drank Beers</h3>
+                    <h2 th:if="${firstDrank.picture==null}">No Drank Beers</h2>
+                    <div th:unless="${firstDrank.picture==null}" id="myCarouselWrapper" class="container-fluid">
+                        <div id="myCarousel-user" class="carousel slide">
+                            <div class="carousel-inner" role="listbox">
+                                <div th:unless="${firstDrank.picture==null}" class="item active">
+                                    <div th:object="${firstDrank}" class="item-item col-sm-4">
+                                        <a th:href="@{/beer/of-user-info(id=${firstDrank.id})}"><img name="picture"
+                                                                                                     th:src="@{'data:image/png;base64,'+${firstDrank.picture}}"
+                                                                                                     class="img-responsive"/></a>
+                                    </div>
+                                    <div th:unless="${drankBeers.isEmpty()}" class="item">
+                                        <div th:each="beer : ${drankBeers}" class="item-item col-sm-4">
+                                            <a th:href="@{/beer/of-user-info(id=${beer.id})}"><img name="picture" th:src="@{'data:image/png;base64,'+${beer.picture}}" class="img-responsive"/></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <h3><i class="far fa-heart"></i> My Beers</h3>
+                    <h2 th:if="${firstBeer.picture==null}">No Beers Added</h2>
+                    <div th:unless="${firstBeer.picture==null}" id="myCarouselWrapper" class="container-fluid">
+                        <div id="myCarousel-user" class="carousel slide">
+                            <div class="carousel-inner" role="listbox">
+                                <div th:unless="${firstBeer.picture==null}" class="item active">
+                                    <div th:object="${firstBeer}" class="item-item col-sm-4">
+                                        <a th:href="@{/beer/of-user-info(id=${firstBeer.id})}"><img name="picture"
+                                                                                                      th:src="@{'data:image/png;base64,'+${firstBeer.picture}}"
+                                                                                                      class="img-responsive"/></a>
+                                    </div>
+                                    <div th:unless="${myBeers.isEmpty()}" class="item">
+                                        <div th:each="beer : ${myBeers}" class="item-item col-sm-4">
+                                            <a th:href="@{/beer/of-user-info(id=${beer.id})}"><img name="picture"
+                                                                                                   th:src="@{'data:image/png;base64,'+${beer.picture}}"
+                                                                                                   class="img-responsive"/></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <!-- BEER INFO END -->
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+    </div>
+</div>
+<div class="footer">
+    <div class="text-center">
+        &copy; NTomov&amp;AStoyanov
+    </div>
+</div>
+</body>

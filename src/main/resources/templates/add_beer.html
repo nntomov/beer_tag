@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css}"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"/>
+    <script th:src="@{http://code.jquery.com/jquery-3.3.1.min.js}"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js}"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.8.1/css/all.css}"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <script th:src="@{/scripts/script.js}"></script>
+</head>
+<body class="inner-page">
+<div class="top-inner-page">
+    <div class="container">
+        <div class="page-header">
+            <div class="row">
+                <div class="pull-left">
+                    <h1><a th:href="@{/home/all_beers}" style="color: inherit; text-decoration: none">BeerTag</a></h1>
+                </div>
+                <div style="padding-top: 20px" class="pull-right">
+                    <a th:href="@{/logout}" class="btn btn-warning" id="btnSignIn">LogOut</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- NAV -->
+<nav class="navbar navbar-default">
+    <div class="container-fluid container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/home/all_beers}" th:method="GET">Home</a></li>
+                <li class="active"><a th:href="@{/home/newBeer}" th:method="GET">New Beer<span
+                        class="sr-only">(current)</span></a></li>
+                <li><a th:href="@{/home/all_users}" th:method="GET">Users</a></li>
+                <li><a th:href="@{/home/my_account}" th:method="GET">My Account</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<!-- NAV END -->
+<div class="container">
+    <h3 class="text-center">Add New Beer</h3>
+    <div class="add-edit">
+        <div class="col-xs-6 col-xs-offset-3">
+            <form method="POST" th:action="@{/home/newBeer}" th:object="${beerDTO}" enctype="multipart/form-data">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="beerName">Beer Name</label>
+                        <input type="text" class="form-control" id="beerName" placeholder="Beer Name" name="name"
+                               th:field="*{name}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="beerName">Brewery</label>
+                        <input type="text" class="form-control" id="brewery_producer" placeholder="Brewery"
+                               name="breweryProducer" th:field="*{breweryProducer}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="origin">Country of Origin</label>
+                        <select class="form-control" name="originCountry">
+                            <option value="default">Select a country</option>
+                            <option th:each="country : ${countryList}" th:value="${country.getId()}"
+                                    th:text="${country.getName()}" th:field="*{originCountry}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="style">Beer Style</label>
+                        <select class="form-control" name="style">
+                            <option value="default">Select a style</option>
+                            <option th:each="style : ${stylesList}" th:value="${style.getId()}"
+                                    th:text="${style.getName()}" th:field="*{style}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="abv">Alcohol by Volume</label>
+                        <input type="text" id="textInput" value="" name="ABV" th:field="*{ABV}">
+                        <input type="range" value="0" step="0.1" min="0" max="10"
+                               onchange="updateTextInput(this.value);">
+                    </div>
+                    <div class="form-group">
+                        <label for="beer-pic">Beer Image</label>
+                        <input type="file" id="beer-pic" name="picture" th:field="*{picture}">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" rows="3" name="description" id="description"
+                                  th:field="*{description}"></textarea>
+                    </div>
+                    <input type="submit" class="btn btn-default" name="submit" value="Add Beer">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="text-center">
+        &copy; NTomov&amp;AStoyanov
+    </div>
+</div>
+</body>
+<script>
+    function updateTextInput(val) {
+        document.getElementById('textInput').value = val;
+    }
+</script>
+
+</html>

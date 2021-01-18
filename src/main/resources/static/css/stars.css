@@ -1,0 +1,49 @@
+.rating
+{
+    position: relative;
+    margin-top: 23px;
+    display: flex;
+    transform: rotateY(180deg);
+}
+
+.rating input
+{
+    display: none;
+}
+
+.rating label
+{
+    display: block;
+    cursor: pointer;
+    width: 23px;
+}
+
+.rating label:before
+{
+    content: '\f005';
+    font-family: fontAwesome;
+    position: relative;
+    width: 13px;
+    display: block;
+    color: #101010;
+}
+
+.rating label:after
+{
+    content: '\f005';
+    font-family: fontAwesome;
+    position: absolute;
+    display: block;
+    color: #1f9cff;
+    top: 0;
+    opacity: 0;
+    transition: .5s;
+    text-shadow: 0 2px 5px rgba(0,0,0,.5);
+}
+
+.rating label:hover:after,
+.rating label:hover ~ label:after,
+.rating input:checked ~ label:after
+{
+    opacity: 1;
+}

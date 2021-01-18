@@ -1,0 +1,225 @@
+.top {
+	height: 440px;
+	background: url('../img/beer.jpg')
+}
+
+h1 {
+	margin-left: 10px;
+	color: #fff
+}
+
+h3 {
+	margin-top: 30px
+}
+
+button {
+	margin-left: 5px;
+	margin-right: 5px
+}
+
+form {
+  display: none
+}
+.forms {
+  position: absolute;
+  top: 0;
+  color: #f80;
+}
+
+.form-container {
+	display: none;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 5px;
+	border: 1px solid #f80;
+	margin-top: 150px
+}
+.panel-heading {
+	border-bottom: 1px solid #ccc;
+}
+.footer {
+  width: 100%;
+  padding: 15px;
+  background-color: #ccc;
+  color: #fff
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  #myCarousel .carousel-inner .item .item-item:last-child {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  #mymyCarousel .carousel-inner {
+    height: 320px;
+  }
+}
+.carousel-inner {
+  overflow-y: hidden;
+}
+.carousel-inner .active.left {
+  left: -25%;
+}
+.carousel-inner .next {
+  left:  25%;
+}
+.carousel-inner .prev {
+  left: -25%;
+}
+.carousel-control {
+  width:  4%;
+}
+.carousel-control.left, .carousel-control.right {
+  margin-left:15px;
+  background-image:none;
+}
+.carousel-inner .item-item {
+  padding:0!important;
+}
+.item-item {
+  background-color: #fff
+}
+#myCarouselWrapper {
+  margin-top: 30px;
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+.carousel-inner {
+	height: 150px
+}
+/*SLIDER IMAGES*/
+.carousel img {
+  margin-left: 130px;
+  display: block;
+  height: 150px!important;
+}
+
+#myCarousel-user img {
+  margin-left: 50px;
+  display: block;
+  height: 150px!important;
+}
+
+/*INNER PAGES*/
+
+.top-inner-page{
+  height: 100px;
+  background: url('../img/beer_inner_page.jpg')
+}
+
+.top-inner-page .page-header {
+  margin: 0
+}
+
+.top-inner-page button {
+  margin-top: 20px
+}
+/*BEER LIST IMAGES*/
+.beers-list .img-responsive {
+  height: 350px!important;
+  width: 350px!important;
+  border: 1px solid #ccc;
+  padding: 3px
+}
+
+.beers-list {
+  margin-bottom: 15px
+}
+
+.inner-page form {
+  display: inline-block;
+}
+
+/*ONE BEER INFO*/
+.beer-info h2 {
+  color: #f80
+}
+
+.beer-info img {
+  width: 400px;
+  height: 400px
+}
+
+.btn-group {
+  margin-top: 15px;
+  margin-bottom: 15px
+}
+
+i {
+  display: inline-block;
+  margin: 0;
+  padding: 2px;
+}
+
+span{
+  display: inline-block;
+  margin:0;
+  padding:0
+}
+
+.rating .fas {
+  color:#FA9F2A
+}
+
+.rating .far {
+  color:#FA9F2A
+}
+
+#addTagForm {
+  width: 100%
+}
+/*ALL USERS LIST*/
+
+.table img, .table th.img {
+  width: 70px
+}
+
+.table td {
+  text-align: center;
+}
+
+.table td a {
+  margin-top: 20px
+}
+
+.table td span {
+  display: block;
+  margin-top: 25px
+}
+
+/*SHOW USER*/
+
+.beer-info .img-responsive.beers {
+  width: 130px;
+  height: 130px;
+  border: 1px solid #ccc;
+  padding: 2px
+}
+
+.user-beers i {
+  color: #f80
+}
+
+.user-info img {
+  width: 300px;
+  height: 300px
+}
+
+.user-info h2 {
+  margin-top: 30px
+}
+.user-beers img{
+  width: 130px;
+  height: 130px
+  }
+
+/*ADD-EDIT BEER*/
+
+.add-edit form{
+  display: block
+}
+
+.inner-page .footer {
+  position: relative;
+  top: 50px
+}
